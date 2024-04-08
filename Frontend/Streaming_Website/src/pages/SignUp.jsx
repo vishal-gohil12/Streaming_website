@@ -1,8 +1,33 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:8080/signIn', {
+      email: email,
+      name: name,
+      password: password
+    }).then(res => {
+      if (res.data === "Success") {
+        alert("Registered successfully! Please Login to proceed.")
+        navigate('/Login');
+      } else if (res.data === "User already exists") {
+        alert("Registered Data is exist! Please Sign in again with different data.");
+      }
+    }).catch(e => {
+      console.log(e)
+    });
+  }
+
   return (
     <>
       <Navbar />
@@ -14,7 +39,7 @@ export default function SignIn() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="/sign-in" method="POST">
+          <form className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -30,6 +55,7 @@ export default function SignIn() {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={e => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -48,6 +74,7 @@ export default function SignIn() {
                   autoComplete="userName"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={e => setName(e.target.value)}
                 />
               </div>
             </div>
@@ -68,13 +95,13 @@ export default function SignIn() {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={e => setPassword(e.target.value)}
                 />
               </div>
             </div>
-
             <div>
               <button
-                type="submit"
+                onClick={handleSignIn}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign In

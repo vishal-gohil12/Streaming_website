@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import ReactPlayer from "react-player";
 import peer from "../../service/peer";
 import { useSocket } from "../context/contextProvider";
+import Navbar from "../Navbar";
 
 const RoomPage = () => {
   const socket = useSocket();
@@ -13,6 +14,19 @@ const RoomPage = () => {
     console.log(`Email ${email} joined room`);
     setRemoteSocketId(id);
   }, []);
+
+  const handleEndStream = () => {
+    peer.peer.close();
+    setMyStream(null);
+    setRemoteStream(null);
+  };
+
+  const handleVideo = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: false,
+    });
+  };
 
   const handleCallUser = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -110,36 +124,78 @@ const RoomPage = () => {
   ]);
 
   return (
-    <div>
-      <h1>Room Page</h1>
-      <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
-      {myStream && <button onClick={sendStreams}>Send Stream</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
-      {myStream && (
-        <>
-          <h1>My Stream</h1>
-          <ReactPlayer
-            playing
-            muted
-            height="100px"
-            width="200px"
-            url={myStream}
-          />
-        </>
-      )}
-      {remoteStream && (
-        <>
-          <h1>Remote Stream</h1>
-          <ReactPlayer
-            playing
-            muted
-            height="100px"
-            width="200px"
-            url={remoteStream}
-          />
-        </>
-      )}
-    </div>
+    <React.Fragment>
+      <Navbar />
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold mt-8 mb-4">Room Page</h1>
+        <div className="flex  items-center justify-center mb-8 gap-7">
+          <div className="flex flex-col">
+            <div className="flex  justify-center items-center bg-gray-900 rounded-lg">
+              {myStream && (
+                <ReactPlayer
+                  playing
+                  height="480px"
+                  width="640px"
+                  url={myStream}
+                />
+              )}
+            </div>
+            <div>My</div>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex justify-center items-center bg-gray-900 rounded-lg">
+              {remoteStream && (
+                <ReactPlayer
+                  playing
+                  height="480px"
+                  width="640px"
+                  url={remoteStream}
+                />
+              )}
+            </div>
+            <div>your</div>
+          </div>
+        </div>
+        <div className="flex  items-center justify-end gap-5">
+          {myStream && (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+              onClick={sendStreams}
+            >
+              Send Stream
+            </button>
+          )}
+          {remoteSocketId && (
+            <button
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+              onClick={handleCallUser}
+            >
+              CALL
+            </button>
+          )}
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+            onClick={handleVideo}
+          >
+            Vidoe Off
+          </button>
+          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
+            Audio Off
+          </button>
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+            onClick={handleEndStream}
+          >
+            End Stream
+          </button>
+        </div>
+      </div>
+
+      {/* <button onClick={handleVideoToggle}>{videoEnabled ? 'Video Off' : 'Video On'}</button>
+                <button onClick={handleAudioToggle}>{audioEnabled ? 'Audio Off' : 'Audio On'}</button> */}
+
+      {/* </div> */}
+    </React.Fragment>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -8,26 +9,29 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 pt-10">
+    <footer className="bg-gray-900 pt-10 h-56">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-white">Company</h2>
             <ul className="list-none text-base">
               <li>
-                <a href={"/team"} className="text-gray-300 hover:text-white">
+                <Link to="/team" className="text-gray-300 hover:text-white">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/team" className="text-gray-300 hover:text-white">
+                <Link to="/team" className="text-gray-300 hover:text-white">
                   Careers
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/ContactUs" className="text-gray-300 hover:text-white">
+                <Link
+                  to="/ContactUs"
+                  className="text-gray-300 hover:text-white"
+                >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -35,19 +39,19 @@ const Footer = () => {
             <h2 className="text-2xl font-bold text-white">Services</h2>
             <ul className="list-none">
               <li>
-                <a href="/" className="text-gray-300 hover:text-white">
+                <Link to="/" className="text-gray-300 hover:text-white">
                   Web Design
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="text-gray-300 hover:text-white">
+                <Link to="/" className="text-gray-300 hover:text-white">
                   Graphic Design
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="text-gray-300 hover:text-white">
+                <Link to="/" className="text-gray-300 hover:text-white">
                   Digital Marketing
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -55,14 +59,14 @@ const Footer = () => {
             <h2 className="text-2xl font-bold text-white">Privacy</h2>
             <ul className="list-none">
               <li>
-                <a href="/" className="text-gray-300 hover:text-white">
+                <Link to="/" className="text-gray-300 hover:text-white">
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="text-gray-300 hover:text-white">
+                <Link to="/" className="text-gray-300 hover:text-white">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

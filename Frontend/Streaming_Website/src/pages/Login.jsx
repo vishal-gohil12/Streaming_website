@@ -1,11 +1,34 @@
-import { Link } from "react-router-dom";
-import Navbar from"../components/Navbar";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Navbar from "../components/Navbar";
+import axios from 'axios'
 // import "../App.css";
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLoginButto = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:8080/login', {
+      email: email,
+      password: password
+    }).then(res => {
+      if (res.data === "Success") {
+        alert('Login successful!')
+        
+        navigate('/');
+      } else if (res.data === "Incorrect password") {
+        alert('Incorrect password! Please try again.');
+      } else {
+        alert("Not found");
+      }
+    })
+  }
+
   return (
     <>
-    
-    <Navbar/>
+      <Navbar />
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -14,7 +37,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -30,6 +53,7 @@ export default function Login() {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={e => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -39,6 +63,7 @@ export default function Login() {
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
+
                 >
                   Password
                 </label>
@@ -58,6 +83,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  onChange={e => setPassword(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -65,7 +91,7 @@ export default function Login() {
 
             <div>
               <button
-                type="submit"
+                onClick={handleLoginButto}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in

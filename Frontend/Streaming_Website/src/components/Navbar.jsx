@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Service", href: "/Service" },
+  { name: "Stream", href: "/stream"},
   { name: "Team", href: "/Team" },
   { name: "Contact Us", href: "/ContactUs" },
   // { name: "Login", href: "/Login" }, // Added login button

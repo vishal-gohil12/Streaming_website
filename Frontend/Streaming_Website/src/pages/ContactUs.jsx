@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Switch } from "@headlessui/react";
 import Example from "../components/Navbar";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";  
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -165,7 +165,7 @@ export default function ContactUs() {
           </div>
         </form>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
