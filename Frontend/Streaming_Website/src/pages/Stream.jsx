@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useSocket } from '../components/context/contextProvider';
+import Navbar from "../components/Navbar";
 
 const Stream = () => {
   const [stream, setStream] = useState(null);
@@ -56,18 +57,43 @@ const Stream = () => {
 
   return (
     <React.Fragment>
-      <h1>Streaming Site</h1>
-      <div>
-        <ReactPlayer
-          playing
-          muted
-          height="400px"
-          width="400px"
-          url={stream}
-        />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onClick={handleStart}>Start</button>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onClick={stopVideo}>Stop</button>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={sendStream}>Send</button>
+      <Navbar />
+      <h1 className="text-xl font-semibold flex my-5     font-Ubuntu  justify-center">
+        Streaming Area
+      </h1>
+      <div className="flex  justify-center">
+        <div>
+          <ReactPlayer
+            // mirrored={true}
+            className="border-4 border-black"
+            playing
+            muted
+            height="480px"
+            width="800px"
+            url={stream}
+            style={{ transform: "scaleX(-1)" }}
+          />
+          <div className='mt-5 flex justify-center gap-8'>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+              onClick={handleStart}
+            >
+              Start
+            </button>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+              onClick={stopVideo}
+            >
+              Stop
+            </button>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={sendStream}
+            >
+              Send
+            </button>
+          </div>
+        </div>
       </div>
     </React.Fragment>
   );
