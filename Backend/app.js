@@ -7,9 +7,8 @@ const { Server } = require("socket.io");
 
 const User = require("./src/models/userModels");
 
-const videoRoutes = require("./src/routes/videoRoutes");
+
 const authRouter = require("./src/routes/userRoutes");
-//const options = require('./src/controller/streamOptions');
 
 const app = express();
 const server = http.createServer(app);
